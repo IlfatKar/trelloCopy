@@ -1,0 +1,45 @@
+body{
+  margin: 30px 100px;
+  background-color: #f0f0f0;
+}
+
+.card{
+  border: 1px solid #606c76;
+  border-radius: 5px;
+  width: 18%;
+  height: auto;
+  padding: 1rem .5rem;
+  margin-right:30px;
+  background-color: #fff;
+  position: relative;
+}
+
+.task{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  background-color: lightsteelblue;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  word-break: break-all;
+  gap: 5px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.task .del{
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.button{
+  width: 18% !important;
+}
+
+input{
+  width: 18% !important;
+}
+
+.hidden{
+  display: none;
+}
