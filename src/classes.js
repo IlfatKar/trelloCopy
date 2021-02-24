@@ -103,15 +103,28 @@ class Card extends DOM {
     this.addBtn = this.element.children[2].children[1]
     this.tasks = this.element.children[1]
     this.addBtn.addEventListener('click', this.addTask.bind(this))
+    this.element.addEventListener('click', this.delTask.bind(this))
+    this.idx = 0
   }
 
   addTask() {
     this.tasks.insertAdjacentHTML('beforeend', `
-      <div class="task" contenteditable="true" draggable="true">  
+      <div class="task" contenteditable="true" draggable="true" data-idx="${this.idx}">  
           ${this.value}
-      <div class="del" contenteditable="false">&times;</div>`)
+      <div class="del" data-delTask="${this.idx}" contenteditable="false">&times;</div>`)
 
     this.value = ''
+    this.idx++
+  }
+
+  delTask(e){
+    if(e.target.dataset.deltask){
+      Array.from(this.tasks.children).forEach(task => {
+        if(e.target.dataset.deltask === task.dataset.idx){
+          task.remove()
+        }
+      })
+    }
   }
 
   changeTitle() {
