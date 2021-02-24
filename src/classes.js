@@ -10,9 +10,9 @@ export class App {
     this.workplace.append(this.button.element)
     this.button.element.addEventListener('click', this.addTask.bind(this))
     this.workplace.addEventListener('click', ev => {
-      if(ev.target === this.input.createBtn){
+      if (ev.target === this.input.createBtn) {
         this.createCard(this.input.value)
-      } else if(ev.target.closest('div') !== this.input.element && ev.target !== this.button.element){
+      } else if (ev.target.closest('div') !== this.input.element && ev.target !== this.button.element) {
         this.cancelTask()
       }
     })
@@ -24,13 +24,13 @@ export class App {
     this.input.clear()
   }
 
-  cancelTask(){
+  cancelTask() {
     this.workplace.append(this.button.element)
     this.input.remove()
     this.input.clear()
   }
 
-  createCard(title){
+  createCard(title) {
     const card = new Card(title)
     this.workplace.insertBefore(card.element, this.workplace.children[this.workplace.children.length - 1])
     this.cancelTask()
@@ -72,13 +72,16 @@ class Input extends DOM {
     this.createBtn = this.element.children[1]
     this.addClass('inputBlock')
   }
-  clear(){
+
+  clear() {
     this.value = ''
   }
-  get value(){
+
+  get value() {
     return this.element.children[0].value
   }
-  set value(val){
+
+  set value(val) {
     this.element.children[0].value = val
   }
 }
@@ -90,10 +93,36 @@ class Card extends DOM {
     this.element.insertAdjacentHTML('beforeend', `
       <div contenteditable="true">${title}</div>
       <div class="tasks">
-
-      </div>`)
+      
+      </div>
+      <div class="addTask inputBlock">
+        <input placeholder="Добавить задачу" type="text"/>
+        <div class="close">OK</div>
+      </div>
+`)
+    this.addBtn = this.element.children[2].children[1]
+    this.tasks = this.element.children[1]
+    this.addBtn.addEventListener('click', this.addTask.bind(this))
   }
-  changeTitle(){
-    
+
+  addTask() {
+    this.tasks.insertAdjacentHTML('beforeend', `
+      <div class="task" contenteditable="true" draggable="true">  
+          ${this.value}
+      <div class="del" contenteditable="false">&times;</div>`)
+
+    this.value = ''
+  }
+
+  changeTitle() {
+
+  }
+
+  get value() {
+    return this.element.children[2].children[0].value
+  }
+
+  set value(val) {
+    this.element.children[2].children[0].value = val
   }
 }
