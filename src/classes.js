@@ -108,13 +108,15 @@ class Card extends DOM {
   }
 
   addTask() {
-    this.tasks.insertAdjacentHTML('beforeend', `
+    if(this.value.trim() !== '') {
+      this.tasks.insertAdjacentHTML('beforeend', `
       <div class="task" contenteditable="true" draggable="true" data-idx="${this.idx}">  
           ${this.value}
       <div class="del" data-delTask="${this.idx}" contenteditable="false">&times;</div>`)
 
-    this.value = ''
-    this.idx++
+      this.value = ''
+      this.idx++
+    }
   }
 
   delTask(e){
