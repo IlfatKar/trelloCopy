@@ -9,5 +9,8 @@ export default {
   },
   getUrl(){
     return document.location.origin
-  }
+  },
+  change(url){
+    window.history.pushState('main', 'СУЗиП', url);
+  },
 }

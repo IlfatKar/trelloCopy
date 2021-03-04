@@ -10,7 +10,7 @@ export class Toast {
     this.callStack = []
     this.block = {
       width: 'auto',
-      height: 40
+      height: 'auto'
     }
   }
 
@@ -27,8 +27,7 @@ export class Toast {
       transition: opacity ${this.animationTime}s;
       align-items: center;
       border: ${this.border};
-      padding: 0 10px;
-      `)
+      padding: 10px;`)
   }
 
   anim() {

@@ -42,7 +42,7 @@ export class App {
   }
 
   storageInit(obj = []) {
-    if(!obj.length){
+    if(!obj){
       let localTasks = JSON.parse(localStorage.getItem('storage'))
       if (localTasks && localTasks.length) {
         localTasks.forEach(card => {
@@ -67,12 +67,14 @@ export class App {
     this.storage = tmpStorage
     try{
       const key = await dispatch.saveTasks(storageToSave)
-      this.utils.toast.success(`Сохранено по адресу ${location.getUrl()}/?id=${key}`)
+      this.utils.toast.success(`Сохранено локально`)
+      this.utils.toast.success(`Сохранено по адресу: ${location.getUrl()}/?id=${key}`)
     }catch (e) {
       this.utils.toast.error(e.message)
     }
 
     localStorage.setItem('storage', JSON.stringify(storageToSave))
+    location.change(location.getUrl())
   }
 
   addTask() {
@@ -89,10 +91,13 @@ export class App {
 
   createCard(title, tasks = []) {
     let idx = tasks.length ? tasks[tasks.length - 1].idx : 0
-    const card = new Card(title, tasks, idx)
+    const card = new Card(title, tasks, idx, title => this.removeFromStorage(title))
     this.workplace.insertBefore(card.element, this.workplace.children[this.workplace.children.length - 1])
     this.cancelTask()
     this.storage.push({title, tasks: tasks, _card: card})
+  }
+  removeFromStorage(title){
+   this.storage = this.storage.filter(item => item.title !== title)
   }
 }
 
@@ -152,12 +157,17 @@ class Input extends DOM {
 }
 
 class Card extends DOM {
-  constructor(title = 'Название', tasks, idx = 0) {
+  constructor(title = 'Название', tasks, idx = 0, remove) {
     super('div')
+    this.remove = remove
     this.addClass(['card'])
     this.title = title
     this.element.insertAdjacentHTML('beforeend', `
-      <div contenteditable="true">${this.title}</div>
+      <div class="cardControl">
+        <div contenteditable="true">${this.title}</div>
+        <div>&times;</div>
+      </div>
+     
       <div class="tasks">
       
       </div>
@@ -170,7 +180,8 @@ class Card extends DOM {
     this.tasks = this.element.children[1]
     this.addBtn.addEventListener('click', this.addTask.bind(this))
     this.element.addEventListener('click', this.delTask.bind(this))
-    this.element.children[0].addEventListener('input', this.changeTitle.bind(this))
+    this.element.children[0].children[0].addEventListener('input', this.changeTitle.bind(this))
+    this.element.children[0].children[1].addEventListener('click', this.removeCard.bind(this))
     this.idx = idx
     this.tasksStorage = []
 
@@ -181,6 +192,11 @@ class Card extends DOM {
         this.addTask()
       })
     }
+  }
+
+  removeCard(e){
+    this.element.remove()
+    this.remove(this.title)
   }
 
   addTask() {

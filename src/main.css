@@ -45,6 +45,17 @@ body{
   top: 40px;
 }
 
+.cardControl{
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.cardControl div:first-child{
+  width: 90%;
+}
+
 .inputBlock{
   display: flex;
   align-items: center;
