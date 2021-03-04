@@ -5,6 +5,8 @@ body{
 
 .workplace{
   min-height: calc(100vh - 140px);
+  overflow-x: auto;
+
 }
 
 .card{

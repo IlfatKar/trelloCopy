@@ -42,7 +42,7 @@ export class App {
   }
 
   storageInit(obj = []) {
-    if(!obj){
+    if(!obj || !obj.length){
       let localTasks = JSON.parse(localStorage.getItem('storage'))
       if (localTasks && localTasks.length) {
         localTasks.forEach(card => {
@@ -202,7 +202,7 @@ class Card extends DOM {
   addTask() {
     if (this.value.trim() !== '') {
       this.tasks.insertAdjacentHTML('beforeend', `
-      <div class="task" contenteditable="true" draggable="true" data-idx="${this.idx}">  
+      <div class="task" contenteditable="false" draggable="true" data-idx="${this.idx}">  
           ${this.value}
       <div class="del" data-delTask="${this.idx}" contenteditable="false">&times;</div>`)
 
