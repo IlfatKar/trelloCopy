@@ -39,6 +39,11 @@ body{
 .button{
   width: 18% !important;
 }
+.saveBtn{
+  position: absolute;
+  right: 60px;
+  top: 40px;
+}
 
 .inputBlock{
   display: flex;
