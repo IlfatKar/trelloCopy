@@ -1,7 +1,6 @@
 import dispatch from './utils/dispatch'
 import location from './utils/location'
 
-
 export class App {
   constructor(workplace) {
     this.button = new Button('Добавать колонку')
@@ -34,7 +33,6 @@ export class App {
     } else {
       this.storageInit()
     }
-
   }
 
   use(obj) {
